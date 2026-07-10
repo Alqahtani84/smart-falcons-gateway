@@ -24,28 +24,42 @@ def _save(arr: np.ndarray, path: Path) -> None:
     Image.fromarray(arr.astype("uint8")).save(path)
 
 
+def _structured(h: int, w: int, orient: str, seed: int) -> np.ndarray:
+    """A deterministic, structured image (gradient + low-freq pattern).
+
+    Structure — not random noise — is what perceptual hashing is designed to
+    capture, so this realistically exercises near-duplicate detection.
+    """
+    yy, xx = np.mgrid[0:h, 0:w].astype(float)
+    base = (yy / max(h - 1, 1)) if orient == "v" else (xx / max(w - 1, 1))
+    patt = 0.5 + 0.5 * np.sin(2 * np.pi * (base * 3 + 0.1 * seed))
+    g = patt * 255.0
+    arr = np.stack([g, np.roll(g, 7, axis=0) * 0.6 + 40, 255 - g], axis=-1)
+    return np.clip(arr, 0, 255)
+
+
 @pytest.fixture()
 def dataset(tmp_path: Path) -> Path:
     root = tmp_path / "raw"
-    rng = np.random.RandomState(0)  # deterministic; Math.random-free
 
-    # A sharp, textured "falcon A" image.
-    a = rng.randint(0, 255, (400, 400, 3))
+    # A structured "falcon A" image.
+    a = _structured(400, 400, orient="v", seed=1)
     _save(a, root / "sourceX" / "falconA.png")
 
     # Exact-byte duplicate of A (reposted).
+    (root / "sourceY").mkdir(parents=True, exist_ok=True)
     shutil.copy(root / "sourceX" / "falconA.png", root / "sourceY" / "falconA_repost.png")
 
     # Near-duplicate of A: same image, slight brightness shift + tiny crop.
     a_near = np.clip(a[2:, 2:, :] + 6, 0, 255)
     _save(a_near, root / "sourceY" / "falconA_edited.jpg")
 
-    # A different, unrelated image "falcon B".
-    b = rng.randint(0, 255, (350, 500, 3))
+    # A different, unrelated image "falcon B" (different orientation/structure).
+    b = _structured(350, 500, orient="h", seed=2)
     _save(b, root / "sourceX" / "falconB.png")
 
     # A tiny, low-res image that should fail the resolution gate.
-    small = rng.randint(0, 255, (64, 64, 3))
+    small = _structured(64, 64, orient="v", seed=3)
     _save(small, root / "falconTiny.png")
 
     return root
