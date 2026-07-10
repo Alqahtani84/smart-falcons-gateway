@@ -27,3 +27,29 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# ---- Smart Falcons Gateway: data & artifacts (never commit) ----
+# Raw + pilot falcon images live OUTSIDE the repo, but ignore any local copies too.
+falcon-dataset/
+data/
+*.jpg
+*.jpeg
+*.png
+*.heic
+*.webp
+!docs/**/*.png          # allow doc/report figures if ever committed intentionally
+
+# Pipeline outputs, manifests, crops, embeddings, models
+outputs/
+eye_crops/
+models/
+*.pt
+*.pth
+*.onnx
+*.npy
+*.faiss
+*.csv
+!docs/**/*.csv          # allow small template CSVs under docs/
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
