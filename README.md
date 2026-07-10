@@ -1,5 +1,8 @@
 # Smart Falcons Gateway
 
+> 📌 **Start here / recall context:** [`docs/MASTER_BRIEF.md`](docs/MASTER_BRIEF.md) — the single
+> source of truth (vision, all planning phases, rules, decisions, status, and links to every doc).
+
 A falcon-only identity & lifecycle platform. The long-term vision spans falcon eye-biometric
 identification, a Digital Falcon Passport, registry & ownership records, GPS/geofencing, health &
 veterinary records, a Digital Twin, AI readiness/risk indicators, genealogy & breeding,
