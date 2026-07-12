@@ -10,6 +10,8 @@ Append-only record of important decisions. Newest at the bottom of each section.
 | D-004 | **Blockchain out of scope** for feasibility; revisit only if an ownership-transfer trust requirement genuinely demands it. **Digital Twin = structured lifecycle record**, not a 3D visual model. | Avoid premature complexity; keep focus on the biometric proof. | 2026-07-10 | Adopted |
 | D-005 | **Dataset stored outside git** at `falcon-dataset/raw/`, read-only; repo holds code + docs only. | Size, copyright of scraped images, and future privacy of pilot falcons. | 2026-07-10 | Adopted |
 | D-006 | **Repo renamed** `falcon-smart-gate` → `smart-falcons-gateway`. Local folder rename deferred (editor lock). | Name should match the product. | 2026-07-10 | Adopted |
+| D-007 | **Classical (Hough/darkness) eye localization is a coarse region-finder, not a precise eye detector.** Keep it as a screening tool; plan a small **learned** eye detector (hand-label ~30–50 eyes) when precise crops are needed. | Verified on real data: on falcon portraits it latches onto the dark facial mask/body, not the eye. Works acceptably only on tight eye close-ups. | 2026-07-12 | Adopted |
+| F-audit | **On-hand images are portraits/full-bird, not eye close-ups, with no identity labels or repeats.** Kaggle set is a 64-animal *classification* dataset. Neither can certify biometrics. | Track A audit + eye-crop visual review. | 2026-07-12 | Finding |
 
 ## Pending decisions (to record when made)
 - **Go/No-Go thresholds** (target EER, Top-1@…): pre-register before running the POC (Q-15).
