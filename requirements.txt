@@ -19,10 +19,17 @@ scipy>=1.10
 tqdm>=4.66
 PyYAML>=6.0
 
-# --- Next slice (eye detection / embeddings / POC) — not required for the audit ---
-# torch>=2.1
-# torchvision>=0.16
-# timm>=1.0
+# Plots (POC report)
+matplotlib>=3.7
+
+# --- Biometric POC embeddings (real backend) ---
+# CPU torch is fine for feasibility. Install torch/torchvision/timm to enable
+# the DINOv2 embedder (scripts/run_poc.py --embedder dinov2). The harness runs
+# without them using --embedder dummy.
+torch>=2.1
+torchvision>=0.16
+timm>=1.0
+
+# Optional (larger-scale search / augmentation), add when needed:
 # albumentations>=1.4
 # faiss-cpu>=1.7
-# matplotlib>=3.7

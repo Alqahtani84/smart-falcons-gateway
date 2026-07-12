@@ -144,15 +144,21 @@ or **NO-GO** (rethink the identity anchor). Track-A numbers may screen but canno
 ---
 
 ## 9. Current status & next steps
-**Built:** repo + scaffold, Track A audit (inventory + dedup + quality) in `ml/` + `scripts/run_audit.py`,
-smoke test, all 18 docs, pilot protocol + checklist.
-**Not yet done / blocked:**
-- ⚠️ Python **not installed** on the dev machine → audit + smoke test **not yet run**.
-- ⚠️ No images in `falcon-dataset/raw/` yet.
-- Local folder still named `falcon-smart-gate` (Cursor lock).
+**Built & verified (Python 3.12 venv, 10 tests passing):**
+- Track A audit (`scripts/run_audit.py`) — ran on **325 real images**: portraits/full-bird, `.jpg`,
+  median ~18 MP, low duplicates, **no identity labels, no repeated individuals**.
+- Eye-detection slice (`scripts/run_eye_crops.py`) — classical CV; verified **coarse** (lands on
+  dark facial mask on portraits), screening only (D-007). A learned detector is the real fix.
+- **Leakage-safe POC harness** (`scripts/run_poc.py`) — pluggable embedder (**DINOv2 verified**,
+  384-dim), cross-session genuine/impostor pairs, verification (EER/AUC/TAR@FAR) + identification
+  (Top-1/5), report + plots. Refuses to produce a verdict without ≥2 birds & a 2nd session.
 
-**Next:** (1) install Python + run smoke test; (2) copy images → run real audit; (3) start Track B
-pilot; (4) build eye-detection slice. Live task list: [`BACKLOG.md`](BACKLOG.md).
+**The wall (confirmed):** existing data cannot certify biometrics — no genuine same-bird pairs.
+**Critical path:** the **Track B pilot** ([`PILOT_PLAN_MINIMAL.md`](PILOT_PLAN_MINIMAL.md)) — the
+only source of a real verdict. POC harness is ready to run the moment Session-2 images exist.
+
+**Housekeeping:** local folder still named `falcon-smart-gate` (Cursor lock); GitHub repo already
+renamed. Live task list: [`BACKLOG.md`](BACKLOG.md).
 
 ---
 
